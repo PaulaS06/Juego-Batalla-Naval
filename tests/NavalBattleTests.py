@@ -61,7 +61,7 @@ class GameTest(unittest.TestCase):
 
     def testBigBoard(self):
         game= NavalBattle.NavalBattle()
-        self.assertRaises(NavalBattle.BoardIsTooBig, game.generateBoard, 21, 5)
+        self.assertRaises(NavalBattle.BoardIsTooBig, game.validateBoardDimensions, 21, 5)
 
     def testBigAndSmall(self):
         expexted_board=[
@@ -83,11 +83,11 @@ class GameTest(unittest.TestCase):
     #Casos de error
     def testZeroBoard(self):
         game= NavalBattle.NavalBattle()
-        self.assertRaises(NavalBattle.BoardError, game.generateBoard, 0, 6)
+        self.assertRaises(NavalBattle.BoardError, game.validateBoardDimensions, 0, 6)
     
     def testnegativeBoard(self):
         game= NavalBattle.NavalBattle()
-        self.assertRaises(NavalBattle.BoardError, game.generateBoard, 6, -5)
+        self.assertRaises(NavalBattle.BoardError, game.validateBoardDimensions, 6, -5)
 
     def testShipsInNoBoard(self):
         game = NavalBattle.NavalBattle()
@@ -105,14 +105,16 @@ class GameTest(unittest.TestCase):
         game = NavalBattle.NavalBattle()
         game.generateBoard(5,5)
         game.addShipsInPosition((1,2))
-        resultado = game.shoot("B3")
+        coordinate = game.validateCoordinate("B3")
+        resultado = game.shoot(coordinate[0], coordinate[1])
 
         self.assertEqual(resultado, True)
 
     def testMissedShot(self):
         game = NavalBattle.NavalBattle()
         game.generateBoard(5,5)
-        resultado = game.shoot("C2")
+        coordinate = game.validateCoordinate("C2")
+        resultado = game.shoot(coordinate[0], coordinate[1])
 
         self.assertEqual(resultado, False)
 
@@ -120,8 +122,10 @@ class GameTest(unittest.TestCase):
         game = NavalBattle.NavalBattle()
         game.generateBoard()
         game.addShipsInPosition((0,0), False, 2)
-        game.shoot("A1")
-        game.shoot("B1")
+        coordinate1 = game.validateCoordinate("A1")
+        coordinate2 = game.validateCoordinate("B1")
+        game.shoot(coordinate1[0], coordinate1[1])
+        game.shoot(coordinate2[0], coordinate2[1])
         
         self.assertTrue(game.isShipDowned())
 
@@ -130,7 +134,9 @@ class GameTest(unittest.TestCase):
         game = NavalBattle.NavalBattle()
         game.generateBoard()
         game.addShipsInPosition((0,0), False, 2)
-        game.shoot("A1")
+        
+        coordinate = game.validateCoordinate("A1")
+        game.shoot(coordinate[0], coordinate[1])
         
         self.assertFalse(game.isShipDowned())
 
@@ -139,15 +145,17 @@ class GameTest(unittest.TestCase):
         game= NavalBattle.NavalBattle()
         game.generateBoard()
         game.addShipsInPosition((2,1), False, 2)
-        game.shoot("C2")
-        self.assertFalse(game.shoot("C2"))
+        coordinate = game.validateCoordinate("C2")
+        game.shoot(coordinate[0], coordinate[1])
+        self.assertFalse(game.shoot(coordinate[0], coordinate[1]))
 
 
     def testCornerShot(self):
         game = NavalBattle.NavalBattle()
         game.generateBoard(5,5)
         game.addShipsInPosition((4,0))
-        self.assertEqual(game.shoot("e1"), True)
+        coordinate = game.validateCoordinate("e1")
+        self.assertEqual(game.shoot(coordinate[0], coordinate[1]), True)
 
 
     def testLastOne(self):
@@ -155,28 +163,29 @@ class GameTest(unittest.TestCase):
         game = NavalBattle.NavalBattle()
         game.generateBoard(5,5)
         game.addShipsInPosition((4,0))
-        self.assertEqual(game.shoot("e3"), True)
+        coordinate = game.validateCoordinate("e3")
+        self.assertEqual(game.shoot(coordinate[0], coordinate[1]), True)
 
     #Casos de error
     def testInvalidCoordinate(self):
         game = NavalBattle.NavalBattle()
         game.generateBoard()
-        self.assertRaises(NavalBattle.InvalidCoordinate, game.shoot, "A21")
+        self.assertRaises(NavalBattle.InvalidCoordinate, game.validateCoordinate, "A21")
 
     def testInvalidCoordinate2(self):
         game = NavalBattle.NavalBattle()
         game.generateBoard()
-        self.assertRaises(NavalBattle.ColumnOutOfRange, game.shoot, "44")
+        self.assertRaises(NavalBattle.ColumnOutOfRange, game.validateCoordinate, "44")
 
     def testColumnOutOfRange(self):
         game = NavalBattle.NavalBattle()
         game.generateBoard()
-        self.assertRaises(NavalBattle.ColumnOutOfRange, game.shoot, "K1")
+        self.assertRaises(NavalBattle.ColumnOutOfRange, game.validateCoordinate, "K1")
 
     def testRowOutOfRange(self):
         game = NavalBattle.NavalBattle()
         game.generateBoard()
-        self.assertRaises(NavalBattle.RowOutOfRange, game.shoot, "A9")
+        self.assertRaises(NavalBattle.RowOutOfRange, game.validateCoordinate, "A9")
 
 
 if __name__ == '__main__':
