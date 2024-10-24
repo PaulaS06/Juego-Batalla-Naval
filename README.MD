@@ -25,14 +25,16 @@ Navega a la carpeta: Una vez que hayas clonado el archivo, abre el cmd y navega 
 ```python src\Console\NavalBattleConsole.py```
 
 
-# **Ejecución del juego en interfaz gráfica de kivy:**
-Navega a la carpeta: Una vez que hayas clonado el archivo, abre el cmd y navega a la carpeta en la que guardaste el archivo, por ejemplo:
+### **Ejecución del juego en interfaz gráfica de kivy**
+
+- **Navega a la carpeta:** Una vez que hayas clonado el archivo, abre el cmd y navega a la carpeta en la que guardaste el archivo, por ejemplo:
 ```C:\Users\durre\Documentos\Universidad\Semestre4\CodigoLimpio\NavalBattleGame```
 
-**Ejecuta el script main:**
+- **Ejecuta el script main:**
 ```python src\NavalBattleGui\NavalBattle-gui.py```
 
-**Instrucciones en Pantalla:** Una vez ejecutado, sigue las instrucciones que aparecerán en la consola para jugar. El juego interactuará contigo a través de mensajes de texto y comandos de teclado.
+- **Instrucciones en Pantalla:** 
+Una vez ejecutado, sigue las instrucciones que aparecerán en la consola para jugar. El juego interactuará contigo a través de mensajes de texto y comandos de teclado.
 -
 ## ¿Cómo está hecho?
 
