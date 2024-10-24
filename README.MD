@@ -10,31 +10,29 @@
 
 ## ¿Cómo lo hago funcionar?
 
-- Prerrequisitos:
+- **Prerrequisitos:**
 Instalar Python: Asegúrate de tener Python instalado en tu sistema. Puedes descargarlo e instalarlo desde python.org.
 
-Librerías: Las únicas librerías usadas para este desarrollo son "random" y "kivy", "random" está incluida por defecto en pyhon; debes instalar "kivy" para poder correr la aplicación desde una interfaz gráfica.
+- **Librerías:** Las únicas librerías usadas para este desarrollo son "random" y "kivy", "random" está incluida por defecto en pyhon; debes instalar "kivy" para poder correr la aplicación desde una interfaz gráfica.
 
 Código del Juego: Asegúrate de tener todos los archivos necesarios del proyecto en una carpeta organizada.
 
-- Ejecución del juego en consola:
+- **Ejecución del juego en consola:**
 Navega a la carpeta: Una vez que hayas clonado el archivo, abre el cmd y navega a la carpeta en la que guardaste el archivo, por ejemplo:
-C:\Users\durre\Documentos\Universidad\Semestre4\CodigoLimpio\NavalBattleGame
+```C:\Users\durre\Documentos\Universidad\Semestre4\CodigoLimpio\NavalBattleGame```
 
-Ejecuta el script main:
-python src\Console\NavalBattleConsole.py
+**Ejecuta el script main:**
+```python src\Console\NavalBattleConsole.py```
 
-- Ejecución del juego en interfaz gráfica de kivy:
+
+# **Ejecución del juego en interfaz gráfica de kivy:**
 Navega a la carpeta: Una vez que hayas clonado el archivo, abre el cmd y navega a la carpeta en la que guardaste el archivo, por ejemplo:
-C:\Users\durre\Documentos\Universidad\Semestre4\CodigoLimpio\NavalBattleGame
+```C:\Users\durre\Documentos\Universidad\Semestre4\CodigoLimpio\NavalBattleGame```
 
-Ejecuta el script main:
-python src\NavalBattleGui\NavalBattle-gui.py
+**Ejecuta el script main:**
+```python src\NavalBattleGui\NavalBattle-gui.py```
 
-
-
-
-Instrucciones en Pantalla: Una vez ejecutado, sigue las instrucciones que aparecerán en la consola para jugar. El juego interactuará contigo a través de mensajes de texto y comandos de teclado.
+**Instrucciones en Pantalla:** Una vez ejecutado, sigue las instrucciones que aparecerán en la consola para jugar. El juego interactuará contigo a través de mensajes de texto y comandos de teclado.
 -
 ## ¿Cómo está hecho?
 
@@ -103,9 +101,12 @@ Para ejecutar las pruebas unitarias, desde la carpeta src, use el comando
 Para poder ejecutarlas desde la carpeta raiz, debe indicar la ruta de busqueda donde se encuentran los
 módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
 
-`
-  import sys
-  sys.path.append("src")
+
+  ```import sys```
+  ```sys.path.append("src")```
+
+
+Para ejecutar las pruebas unitarias de la base de datos se debe hacer lo siguiente  
 
 ## Como correr las pruebas unitarias?
 
