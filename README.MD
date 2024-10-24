@@ -34,16 +34,17 @@ Navega a la carpeta: Una vez que hayas clonado el archivo, abre el cmd y navega 
 ```python src\NavalBattleGui\NavalBattle-gui.py```
 
 - **Instrucciones en Pantalla:** 
-Una vez ejecutado, sigue las instrucciones que aparecerán en la consola para jugar. El juego interactuará contigo a través de mensajes de texto y comandos de teclado.
--
+Una vez ejecutado, sigue las instrucciones que aparecerán en la consola para jugar. El juego interactuará contigo a través de mensajes de texto y comandos de teclado. 
+
 ## ¿Cómo está hecho?
 
-- Arquitectura del Proyecto:
-Clases y Excepciones Personalizadas:
+**Arquitectura del Proyecto:**
+
+- **Clases y Excepciones Personalizadas:**
 
 El proyecto define varias excepciones personalizadas para manejar errores específicos relacionados con la configuración y ejecución del juego, como NotEnoughSpace, BoardIsTooSmall, BoardIsTooBig, InvalidCoordinate, entre otras.
 
-Clase Principal - NavalBattle:
+*Clase Principal - NavalBattle:*
 Esta es la clase principal que gestiona toda la lógica del juego.
 
 Ejecución Principal:
