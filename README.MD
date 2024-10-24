@@ -1,7 +1,7 @@
 ## ¿Quién hizo esto?
 
-Daniel Calle
-Dilan Urrego
+Steven Oviedo
+Sara Moncada
 
 ## ¿Qué es y para qué es?
 
@@ -106,4 +106,8 @@ módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
 `
   import sys
   sys.path.append("src")
+
+## Como correr las pruebas unitarias?
+
+- Carpeta tests
 `
