@@ -1,7 +1,7 @@
 ## ¿Quién hizo esto?
 
-Steven Oviedo
-Sara Moncada
+- Steven Oviedo
+- Sara Moncada
 
 ## ¿Qué es y para qué es?
 
