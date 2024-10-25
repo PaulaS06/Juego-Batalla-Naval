@@ -58,7 +58,8 @@ El proyecto define varias excepciones personalizadas para manejar errores espec�
 Contiene archivos y carpetas esenciales para el proyecto.
 
 - ```.gitignore:``` Define qué archivos o carpetas deben ser ignorados por el sistema de control de versiones (Git).
-LICENSE: Contiene la licencia del proyecto, especificando los términos de uso, distribución y contribución.
+
+- ```LICENSE:``` Contiene la licencia del proyecto, especificando los términos de uso, distribución y contribución.
 
 Archivos:
 settings.json: Configuraciones específicas para el entorno de desarrollo Visual Studio Code, como preferencias de formateo, extensiones recomendadas, etc.
