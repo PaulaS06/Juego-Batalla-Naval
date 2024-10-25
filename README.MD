@@ -52,11 +52,11 @@ El proyecto define varias excepciones personalizadas para manejar errores espec�
 
 - *Dependencias de Otros Proyectos:* No hay dependencias externas de otros proyectos o librerías adicionales más allá de las excepciones personalizadas y la biblioteca estándar random. Todo el juego está contenido dentro de una única clase y conjunto de excepciones personalizadas definidas en el mismo script.
 
-- Organización de los Módulos:
-Carpeta Principal: "NAVAL BATTLE GAME"
+- **Organización de los Módulos:**
+*Carpeta Principal: "NAVAL BATTLE GAME"*
 
 Contiene archivos y carpetas esenciales para el proyecto.
-Archivos:
+
 - ```.gitignore:``` Define qué archivos o carpetas deben ser ignorados por el sistema de control de versiones (Git).
 LICENSE: Contiene la licencia del proyecto, especificando los términos de uso, distribución y contribución.
 
