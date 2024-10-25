@@ -61,9 +61,6 @@ Contiene archivos y carpetas esenciales para el proyecto.
 
 - ```LICENSE:``` Contiene la licencia del proyecto, especificando los términos de uso, distribución y contribución.
 
-Archivos:
-settings.json: Configuraciones específicas para el entorno de desarrollo Visual Studio Code, como preferencias de formateo, extensiones recomendadas, etc.
-
 - ```__init__.py:``` Permite que la carpeta se trate como un paquete Python, facilitando la importación de módulos internos.
 - ```__pycache__:``` Carpeta generada automáticamente por Python para almacenar archivos compilados en bytecode (.pyc), lo que mejora la velocidad de carga de los módulos.
 
