@@ -57,39 +57,53 @@ Carpeta Principal: "NAVAL BATTLE GAME"
 
 Contiene archivos y carpetas esenciales para el proyecto.
 Archivos:
-.gitignore: Define qué archivos o carpetas deben ser ignorados por el sistema de control de versiones (Git).
+- ```.gitignore:``` Define qué archivos o carpetas deben ser ignorados por el sistema de control de versiones (Git).
 LICENSE: Contiene la licencia del proyecto, especificando los términos de uso, distribución y contribución.
 
 Archivos:
 settings.json: Configuraciones específicas para el entorno de desarrollo Visual Studio Code, como preferencias de formateo, extensiones recomendadas, etc.
 
-__init__.py: Permite que la carpeta se trate como un paquete Python, facilitando la importación de módulos internos.
-__pycache__: Carpeta generada automáticamente por Python para almacenar archivos compilados en bytecode (.pyc), lo que mejora la velocidad de carga de los módulos.
+- ```__init__.py:``` Permite que la carpeta se trate como un paquete Python, facilitando la importación de módulos internos.
+- ```__pycache__:``` Carpeta generada automáticamente por Python para almacenar archivos compilados en bytecode (.pyc), lo que mejora la velocidad de carga de los módulos.
 
 
 ## Estructura sugerida
 
-- Carpeta src:
-Carpeta "src"
+- **Carpeta src:**
 Esta carpeta contiene el código fuente del proyecto, dividido en módulos organizados.
 Subcarpetas:
-"Console"
-Archivos:
-NavalBattleConsole.py: Contiene la lógica del juego interactuando con la consola.
-"NavalBattle"
-Archivos:
-NavalBattle.py: Contiene la implementación principal del juego de Batalla Naval, incluyendo clases y lógica relacionadas con la gestión del tablero, la colocación de barcos, y las mecánicas del juego.
-"NavalBattleGui"
-Archivos:
-NavalBattle-gui.py: Contiene la lógica del juego interactuando en una interfaz gráfica de kivy
 
+1.*"Console"*
 
+- **Functions_DB.py:** Este archivo incluye funciones relacionadas con la base de datos del juego, como la creación o modificación de registros.
 
-- Carpeta tests: Pruebas Unitarias 
-Carpeta "tests"
-Contiene los archivos relacionados con las pruebas del proyecto, asegurando que las funcionalidades implementadas se comporten como se espera.
-Archivos:
-NavalBattleTests.py: Contiene los casos de prueba para la clase NavalBattle y sus métodos, probablemente utilizando un framework de pruebas como unittest o pytest.
+- **Crear_partida.py:** Se encarga de gestionar la creación de nuevas partidas
+
+- **Menu_Console_DB.py**: Contiene la lógica del menú que permite realizar operaciones relacionadas con la base de datos del juego.
+
+- **NavalBattleConsole.py:** Contiene la lógica del juego interactuando con la consola.
+
+2. *Controller:*
+
+- **NavalBattleController.py:** Archivo que es el responsable de actuar como intermediario entre la lógica del juego y la interfaz de usuario (tanto consola como GUI)
+
+3. *Model:*
+
+- **NavalBattleModel.py:** Contiene el modelo del juego
+
+4. *NavalBattleGui*
+
+- **NavalBattle-gui.py:** Contiene la lógica del juego interactuando en una interfaz gráfica de kivy
+
+5. *Program*
+
+- **NavalBattle.py:** Contiene la implementación principal del juego de Batalla Naval, incluyendo clases y lógica relacionadas con la gestión del tablero, la colocación de barcos, y las mecánicas del juego.
+
+6. **tests** 
+
+- **NavalBattleTests.py:** Contiene los casos de prueba para la clase NavalBattle y sus métodos, probablemente utilizando un framework de pruebas como unittest o pytest.
+
+- **Test_DB.py:** Contiene las pruebas relacionadas con las funcionalidades de la base de datos
 
 ## Uso
 
