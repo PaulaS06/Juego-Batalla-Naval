@@ -115,7 +115,7 @@ Para ejecutar las pruebas unitarias desde el directorio raíz, ejecuta el archiv
 - **Casos de prueba de la base de datos:**
 ```python tests/Test_DB.py```  
 
-## Como hago funcionar la base de datos ##
+## Como hago funcionar la base de datos?
 
 **Prerrequisitos:** Asegurese de tener una base de datos PostgreSQL y sus respectivos datos de acceso.
 
