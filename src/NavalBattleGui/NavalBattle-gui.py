@@ -2,6 +2,8 @@ import sys
 sys.path.append("src")
 # Importar NavalBattle desde donde está definido
 from Program.NavalBattle import NavalBattle
+from Controller.NavalBattleController import Controller_NB
+from Model.NavalBattleModel import Model_NB
 
 
 import kivy
@@ -83,37 +85,16 @@ class NavalBattleApp(App):
         
         # Si todo es válido, cerrar el Popup y empezar el juego
         self.popup.dismiss()
+        rows_db = rows
+        column_db = cols 
         self.start_game(rows, cols, ships)  # Iniciar el juego con el número de barcos
-
-    def show_error_popup(self, message):
-        """
-        Muestra un popup de error con el mensaje especificado y un botón para cerrar el popup.
-        """
-        # Crear el layout del popup con un botón de cerrar
-        content = BoxLayout(orientation='vertical')
-        error_message = Label(text=message)
-        close_button = Button(text='Cerrar', size_hint=(1, 0.2))
-
-        content.add_widget(error_message)
-        content.add_widget(close_button)
-
-        # Crear el popup
-        error_popup = Popup(title='Error',
-                            content=content,
-                            size_hint=(0.75, 0.5),
-                            auto_dismiss=False)  # No se cierra automáticamente, solo con el botón
-
-        # Asignar la función para cerrar el popup cuando se presione el botón
-        close_button.bind(on_press=error_popup.dismiss)
-
-        # Mostrar el popup
-        error_popup.open()
-
 
 
     def start_game(self, rows, cols, ships):
         # Crear una instancia del juego
         self.game = NavalBattle()  
+
+        self.game.reset_stats() 
         
         # Generar el tablero con las dimensiones ingresadas
         self.game.generateBoard(w=cols, h=rows)
@@ -146,7 +127,7 @@ class NavalBattleApp(App):
         self.root.add_widget(layout)
 
     def on_button_click(self, instance):
-    # Obtener la posición del botón clicado
+        # Obtener la posición del botón clicado
         for pos, button in self.buttons.items():
             if button == instance:
                 row, col = pos
@@ -154,7 +135,7 @@ class NavalBattleApp(App):
 
         # Lógica que manejará el clic de un botón
         hit = self.game.shoot(row, col)  # Suponiendo que shoot actualiza el tablero y devuelve True si acierta
-        
+
         if hit:
             self.game.board[row][col] = 0  # Reemplazar con 0 ya que fue un impacto
             
@@ -164,64 +145,97 @@ class NavalBattleApp(App):
             
             # Verificar si el barco fue hundido
             if self.game.check_ship_sunk(self.game.last_hit):
-                self.show_sunk_ship_popup(self.game.last_hit)
-            
+                self.show_sunk_ship_popup(self.game.last_hit, lambda: self.show_victory_popup() if self.game.all_ships_sunk() else None)
+
         else:
             instance.background_color = [127/255, 181/255, 246/255, 5]  # Azul para un disparo fallido
             instance.text = '~'
         
         instance.disabled = True  # Deshabilitar el botón después de un disparo
 
-        # Verificar si todos los barcos han sido hundidos
-        if self.game.all_ships_sunk():
-            self.show_victory_popup()
-
-    def show_sunk_ship_popup(self, ship_length):
-        # Obtener la cantidad de barcos restantes
-        remaining_ships = len(set(sum(self.game.board, []))) - 1  # Restar 1 porque el '0' también cuenta
-
-        # Crear el layout del popup con un botón de cerrar
+    def show_popup(self, title, message, size_hint=(0.75, 0.5), restart_button=False, upload_db = False,  callback=None):
+        """Método unificado para mostrar popups."""
         content = BoxLayout(orientation='vertical')
-        message = Label(text=f"¡Has hundido un barco de longitud {ship_length}! Quedan {remaining_ships} barcos restantes.")
+        msg_label = Label(text=message)
         close_button = Button(text='Cerrar', size_hint=(1, 0.2))
         
-        content.add_widget(message)
+        content.add_widget(msg_label)
         content.add_widget(close_button)
 
-        # Crear el popup
-        sunk_ship_popup = Popup(title='¡Barco hundido!',
-                                content=content,
-                                size_hint=(0.75, 0.5),
-                                auto_dismiss=False)  # No se cierra automáticamente, solo con el botón
+        popup = Popup(title=title, content=content, size_hint=size_hint, auto_dismiss=False)
 
-        # Asignar la función para cerrar el popup cuando se presione el botón
-        close_button.bind(on_press=sunk_ship_popup.dismiss)
+        close_button.bind(on_press=popup.dismiss)
 
-        # Mostrar el popup
-        sunk_ship_popup.open()
+        # Si el botón de reinicio es True, se añade el botón de reinicio
+        if restart_button and  upload_db :
+            restart_button = Button(text='Reiniciar', size_hint=(1, 0.2))
+            upload_db = Button(text='Cargar datos al DB', size_hint=(1, 0.2))
+            content.add_widget(restart_button)
+            content.add_widget(upload_db)
+            
+            # Función para reiniciar el juego
+            def restart_game(instance):
+                popup.dismiss()  # Cerrar el popup
+                self.show_board_size_popup()  # Volver a mostrar el popup para ingresar dimensiones
+
+            def upload_data (instance):
+                summary = self.game.get_summary() 
+  
+                game = Model_NB( starting_code=summary['id'], rows=str(summary['row']), columns=str(summary['column']), ship_count=str(summary['ship_count']),
+                                 hits=int(summary['hits']), misses=int(summary['misses']), total_shots= int(summary['total_shots']),
+                        max_possible_shots=int(summary['max_possible_shots']),  score=int(summary['score']) )
+        
+                # Guardar partida en la BD
+                Controller_NB.Insertar( game )
+
+                popup.dismiss()
+                self.show_uploaded_db()
+
+            restart_button.bind(on_press=restart_game)  # Vincular el botón a la función de reinicio
+            upload_db.bind(on_press=upload_data)
+
+        # Vincular el cierre del popup al callback, si se proporciona
+        popup.bind(on_dismiss=lambda instance: callback() if callback else None)
+
+        popup.open()  # Mostrar el popup
+
+    def show_sunk_ship_popup(self, ship_length, callback):
+        """Muestra un popup cuando se hunde un barco."""
+        remaining_ships = self.game.get_remaining_ships()  # Llama a la función sin argumentos
+        message = f"¡Has hundido un barco de longitud {ship_length}! Quedan {remaining_ships} barcos restantes."
+        
+        # Muestra el popup y ejecuta el callback después de que se cierra
+        self.show_popup(title='¡Barco hundido!', message=message, callback=callback)
+    
+    def check_victory(self):
+        if self.game.all_ships_sunk():
+            self.show_victory_popup()  # Mostrar popup de victoria si no quedan barcos
+
+    def show_uploaded_db(self):
+        """ Muestra un popup cuando se cargan los datos."""
+        message = "Se han cargado los datos de la partida correctamente"
+        self.show_popup(title='¡Carga exitosa!', message=message, callback=None)
+
 
     def show_victory_popup(self):
-        # Crear el layout del popup con un botón de cerrar
-        content = BoxLayout(orientation='vertical')
-        message = Label(text="¡Felicidades! Has hundido todos los barcos. ¡Has ganado!")
-        close_button = Button(text='Cerrar', size_hint=(1, 0.2))
+        """Muestra un popup para la victoria con estadísticas de la partida."""
+        summary = self.game.get_summary()  # Obtener el resumen de la partida
+        message = (f'¡Felicidades! Has hundido todos los barcos.\n'
+                f'ID de la partida: {summary["id"]}\n'
+                f'Tiros acertados: {summary["hits"]}\n'
+                f'Tiros fallidos: {summary["misses"]}\n'
+                f'Total de tiros realizados: {summary["total_shots"]}\n'
+                f'Máximo de tiros posibles: {summary["max_possible_shots"]}\n'
+                f'Numero de barcos derribados: {summary["ship_count"]}\n'
+                f'Puntaje: {summary["score"]:.2f}'
+                                )  # Formato del puntaje
         
-        content.add_widget(message)
-        content.add_widget(close_button)
-
-        # Crear el popup
-        victory_popup = Popup(title='¡Victoria!',
-                            content=content,
-                            size_hint=(0.75, 0.5),
-                            auto_dismiss=False)  # No se cierra automáticamente, solo con el botón
-
-        # Asignar la función para cerrar el popup cuando se presione el botón
-        close_button.bind(on_press=victory_popup.dismiss)
-
-        # Mostrar el popup
-        victory_popup.open()
+        self.show_popup(title='¡VICTORIA!', message=message, restart_button=True, upload_db =True)
 
 
-    
+    def show_error_popup(self, error_message):
+        """Muestra un popup para errores del tablero."""
+        self.show_popup(title='Error dato inválido ', message=error_message)
+  
 if __name__ == '__main__':
     NavalBattleApp().run()
