@@ -15,7 +15,7 @@ Instalar Python: Asegúrate de tener Python instalado en tu sistema. Puedes desc
 
 - **Librerías:** Las únicas librerías usadas para este desarrollo son "random" y "kivy", "random" está incluida por defecto en pyhon; debes instalar "kivy" para poder correr la aplicación desde una interfaz gráfica.
 
-Código del Juego: Asegúrate de tener todos los archivos necesarios del proyecto en una carpeta organizada.
+- **Código del Juego:** Asegúrate de tener todos los archivos necesarios del proyecto en una carpeta organizada.
 
 - **Ejecución del juego en consola:**
 Navega a la carpeta: Una vez que hayas clonado el archivo, abre el cmd y navega a la carpeta en la que guardaste el archivo, por ejemplo:
