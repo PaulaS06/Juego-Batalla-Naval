@@ -44,16 +44,13 @@ Una vez ejecutado, sigue las instrucciones que aparecerán en la consola para ju
 
 El proyecto define varias excepciones personalizadas para manejar errores específicos relacionados con la configuración y ejecución del juego, como NotEnoughSpace, BoardIsTooSmall, BoardIsTooBig, InvalidCoordinate, entre otras.
 
-*Clase Principal - NavalBattle:*
-Esta es la clase principal que gestiona toda la lógica del juego.
+- *Clase Principal - NavalBattle:* Esta es la clase principal que gestiona toda la lógica del juego.
 
-Ejecución Principal:
-En el bloque if __name__ == "__main__":, el programa interactúa con el usuario para configurar el tamaño del tablero y la cantidad de barcos, y luego permite al jugador realizar disparos hasta que todos los barcos enemigos sean hundidos.
+- *Ejecución Principal:* En el bloque if __name__ == "__main__":, el programa interactúa con el usuario para configurar el tamaño del tablero y la cantidad de barcos, y luego permite al jugador realizar disparos hasta que todos los barcos enemigos sean hundidos.
 
-Bibliotecas Usadas:
-random: Se utiliza para generar posiciones aleatorias para los barcos en el tablero.
-Dependencias de Otros Proyectos:
-No hay dependencias externas de otros proyectos o librerías adicionales más allá de las excepciones personalizadas y la biblioteca estándar random. Todo el juego está contenido dentro de una única clase y conjunto de excepciones personalizadas definidas en el mismo script.
+- *Bibliotecas Usadas:* random: Se utiliza para generar posiciones aleatorias para los barcos en el tablero.
+
+- *Dependencias de Otros Proyectos:* No hay dependencias externas de otros proyectos o librerías adicionales más allá de las excepciones personalizadas y la biblioteca estándar random. Todo el juego está contenido dentro de una única clase y conjunto de excepciones personalizadas definidas en el mismo script.
 
 - Organización de los Módulos:
 Carpeta Principal: "NAVAL BATTLE GAME"
