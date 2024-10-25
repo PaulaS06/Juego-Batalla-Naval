@@ -1,4 +1,4 @@
-# Recuerde poner aqui los datos d econexion y guardar como SecretConfig.py
+# Recuerde poner aqui los datos de conexion y guardar como SecretConfig.py
 
 #AQUI VAN LOS DATOS DE TU DB
 #           |    |

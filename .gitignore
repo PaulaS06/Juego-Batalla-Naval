@@ -2,4 +2,4 @@
 venv
 .idea
 __pycache__
-Secret_Config.py
+Secret_Config.py 

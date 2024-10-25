@@ -73,7 +73,7 @@ settings.json: Configuraciones específicas para el entorno de desarrollo Visual
 Esta carpeta contiene el código fuente del proyecto, dividido en módulos organizados.
 Subcarpetas:
 
-1.*"Console"*
+1.*Console*
 
 - **Functions_DB.py:** Este archivo incluye funciones relacionadas con la base de datos del juego, como la creación o modificación de registros.
 
@@ -114,6 +114,18 @@ Para ejecutar las pruebas unitarias desde el directorio raíz, ejecuta el archiv
 
 - **Casos de prueba de la base de datos:**
 ```python tests/Test_DB.py```  
+
+## Como hago funcionar la base de datos ##
+
+**Prerrequisitos:** Asegurese de tener una base de datos PostgreSQL y sus respectivos datos de acceso.
+
+Luego, realiza los siguientes pasos
+
+1. Duplica el archivo ``` Secret_Config-sample.py```  y renómbralo como ``` Secret_Config.py``` . Luego, configura los datos de conexión a tu base de datos dentro de este nuevo archivo.
+
+2. Instala el paquete psycopg2 utilizando el siguiente comando:
+```pip install psycopg2```
+
 
 
 `
