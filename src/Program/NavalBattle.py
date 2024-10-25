@@ -1,6 +1,28 @@
 import random
 
 # Excepciones personalizadas para diferentes errores relacionados con el juego.
+
+class InvalidStartingCodeError(Exception):
+    """Excepción lanzada cuando el código de la partida no es válido."""
+    pass
+
+class InvalidDimensionError(Exception):
+    """Excepción lanzada cuando el número de filas o columnas no es válido."""
+    pass
+
+class InvalidShipCountError(Exception):
+    """Excepción lanzada cuando el número de barcos no es válido."""
+    pass
+
+class InvalidScoreError(Exception):
+    """Excepción lanzada cuando el puntaje no es válido."""
+    pass
+
+class NonNumericValueError(Exception):
+    """Excepción lanzada cuando se ingresa un valor no numérico."""
+    pass
+
+#
 class NotEnoughSpace(Exception):
     """Se lanza cuando no hay suficiente espacio para los barcos."""
     pass
@@ -47,8 +69,33 @@ class NavalBattle:
     "question" :"\U00002754",
     "wave" : "\U0001F30A"
     }
+    id = random.randint(00000, 99999)  # Cambia los límites según lo necesario
+    stats = {
+            'row' : 0,
+            'column' : 0,
+            'hits': 0,
+            'misses': 0,
+            'total_shots': 0,
+            'max_possible_shots': 0,
+            'ship_count': 0,
+            'score': 0
+              
+        }
+    
     shooting_history=set()
 
+     # Método para reiniciar las estadísticas
+    def reset_stats(self):
+        self.id = random.randint(00000, 99999)  # Genera un nuevo ID para la nueva partida
+        self.stats['row'] =0
+        self.stats['column'] = 0 
+        self.stats['hits'] = 0
+        self.stats['misses'] = 0
+        self.stats['total_shots'] = 0
+        self.stats['max_possible_shots'] = 0
+        self.stats['ship_count'] = 0
+        self.stats['score'] = 0
+        self.shooting_history.clear()  # Limpia el historial de disparos
 
     
     def validateBoardDimensions(self, w, h):
@@ -91,6 +138,9 @@ class NavalBattle:
         self.h = h
         self.board = [[0 for j in range(w)] for i in range(h)] 
         self.player_board = [[self.EMOJIS["question"] for i in range(w)] for i in range(h)]  # Tablero visual para el jugador
+        self.stats['column'] = w
+        self.stats['row'] = h
+        self.stats['max_possible_shots'] = w * h  # Máximo de tiros posibles
 
         return self.board
 
@@ -154,6 +204,7 @@ class NavalBattle:
         Excepciones:
         Lanza NotEnoughSpace si la cantidad de barcos supera el límite.
         """
+        self.stats['ship_count'] = num_ships
         if num_ships > limit:
             raise NotEnoughSpace
         ship_len = num_ships + 1
@@ -234,34 +285,41 @@ class NavalBattle:
         return row, column_index
 
 
-
-
     def shoot(self, row, column):
         """
         Realiza un disparo a una coordenada específica.
 
         Parámetros:
-        coordinate -- coordenada en formato "C2" (columna, fila).
+        row -- fila de la coordenada.
+        column -- columna de la coordenada.
 
         Retorna:
         True si el disparo impacta un barco, False si impacta agua.
         """
         # Validar la coordenada antes de realizar el disparo
-        
-
         if self.board[row][column] == True:
-            return False
+            return False  # Ya disparaste a esta coordenada
+
+        # Incrementar el total de disparos
+        self.stats['total_shots'] += 1
 
         # Verifica si el disparo impacta un barco
-        elif self.board[row][column] != 0:
+        if self.board[row][column] != 0:
             self.last_hit = self.board[row][column]
-            self.board[row][column] = True
+            self.board[row][column] = True  # Marcar como impactado
             self.player_board[row][column] = self.EMOJIS["colition"]  # Muestra el impacto en el tablero del jugador
+            
+            # Aumentar el contador de impactos
+            self.stats['hits'] += 1
             return True
         else:
             # Disparo en el agua
             self.player_board[row][column] = self.EMOJIS["wave"]
+            
+            # Aumentar el contador de fallos
+            self.stats['misses'] += 1
             return False
+
         
     def isCoordinateAlreadyShot(self, coordinate):
         if coordinate in self.shooting_history:
@@ -307,6 +365,9 @@ class NavalBattle:
             if any(cell != 0 for cell in row):  # Si algún número distinto de 0 queda, hay barcos vivos
                 return False
         return True  # Todos los barcos han sido hundidos
+    
+    def get_remaining_ships(self):
+        return len(set(sum(self.board, []))) - 1  # Restar 1 porque el '0' también cuenta
 
 
     def check_ship_sunk(self, ship_length):
@@ -318,3 +379,42 @@ class NavalBattle:
             if ship_length in row:
                 return False  # El barco aún tiene partes vivas
         return True  # El barco ha sido completamente hundido
+
+    
+    def calculate_score(self):
+        # Total de disparos
+        total = self.stats['hits'] + self.stats['misses']
+        
+        # Calcular la eficiencia
+        efficiency = (self.stats['hits'] / total) * 100 if total > 0 else 0
+        
+        # Base del puntaje
+        score = efficiency * (self.stats['hits'] * 20)  # Darle un peso a los hits
+
+        # Ajustar por tamaño del tablero (puedes ajustar el divisor)
+        board_size_factor = ((self.stats['column'] * self.stats['row']) / 1.5 ) + 15 # Normalizando el tamaño
+    
+        score *= board_size_factor
+
+        # Ajustar por el número de barcos (podrías probar diferentes pesos)
+        score += (self.stats['ship_count'] * 10)  # Bonificación por barcos hundidos
+        score /= 100
+
+        # Asegúrate de que el puntaje no sea negativo
+        self.stats['score'] = max(int(score), 0)
+
+   
+    def get_summary(self):
+        # Calcular el puntaje al final de la partida
+        self.calculate_score()
+        return {
+            'id': self.id,
+            'row':self.stats['row'],
+            'column':self.stats['column'],
+            'hits': self.stats['hits'],
+            'misses': self.stats['misses'],
+            'total_shots': self.stats['total_shots'],
+            'max_possible_shots': self.stats['max_possible_shots'],
+            'ship_count':self.stats['ship_count'],
+            'score': self.stats['score']
+        }
