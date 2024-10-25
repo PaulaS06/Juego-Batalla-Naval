@@ -99,30 +99,21 @@ Subcarpetas:
 
 - **NavalBattle.py:** Contiene la implementación principal del juego de Batalla Naval, incluyendo clases y lógica relacionadas con la gestión del tablero, la colocación de barcos, y las mecánicas del juego.
 
-6. **tests** 
+6. *tests*
 
 - **NavalBattleTests.py:** Contiene los casos de prueba para la clase NavalBattle y sus métodos, probablemente utilizando un framework de pruebas como unittest o pytest.
 
 - **Test_DB.py:** Contiene las pruebas relacionadas con las funcionalidades de la base de datos
 
-## Uso
+## Uso de las Pruebas Unitarias 
 
-Para ejecutar las pruebas unitarias, desde la carpeta src, use el comando
+Para ejecutar las pruebas unitarias desde el directorio raíz, ejecuta el archivo ```Test_DB.py``` con el siguiente comando:
 
-`
-  NAVAL BATTLE GAME\src> python -m unittest discover ..\tests -p '*test*.py'
-`
-Para poder ejecutarlas desde la carpeta raiz, debe indicar la ruta de busqueda donde se encuentran los
-módulos, incluyendo las siguientes lineas al inicio del módulo de pruebas
+- **Casos de prueba para el juego de batalla naval:**
+```python tests/NavalBattleTests.py``` 
 
-
-  ```import sys```
-  ```sys.path.append("src")```
+- **Casos de prueba de la base de datos:**
+```python tests/Test_DB.py```  
 
 
-Para ejecutar las pruebas unitarias de la base de datos se debe hacer lo siguiente  
-
-## Como correr las pruebas unitarias?
-
-- Carpeta tests
 `
