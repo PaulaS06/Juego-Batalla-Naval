@@ -5,7 +5,7 @@ sys.path.append( "src" )
 import psycopg2
 
 from Model.NavalBattleModel import Model_NB
-import SecretConfig
+import Secret_Config
 
 class Controller_NB:
 
@@ -119,7 +119,7 @@ class Controller_NB:
 
     def ObtenerCursor():
         """ Crea la conexion a la base de datos y retorna un cursor para hacer consultas """
-        connection = psycopg2.connect(database=SecretConfig.PGDATABASE, user=SecretConfig.PGUSER, password=SecretConfig.PGPASSWORD, host=SecretConfig.PGHOST, port=SecretConfig.PGPORT)
+        connection = psycopg2.connect(database=Secret_Config.PGDATABASE, user=Secret_Config.PGUSER, password=Secret_Config.PGPASSWORD, host=Secret_Config.PGHOST, port=Secret_Config.PGPORT)
         # Todas las instrucciones se ejecutan a tavés de un cursor
         cursor = connection.cursor()
         return cursor

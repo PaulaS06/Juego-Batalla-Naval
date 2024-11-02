@@ -1,4 +1,3 @@
-from Functions_DB import Crear_partida 
 from Functions_DB import Insertar_Partida 
 from Functions_DB import Eliminar_Partida
 from Functions_DB import Buscar_Partida
